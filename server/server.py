@@ -1,7 +1,21 @@
-from flask import Flask
+from flask import Flask, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, origins='*')
 
-@app.route("/members")
+@app.route("/members", methods=(['GET']))
 def members():
-    return {"members": ("Member1", "Member2", "Member3", "Member4")}
+    return jsonify(
+        {
+            "members": [
+                'arpan'
+                'zach'
+                'jessie'
+            ]
+        }
+    )
+    # return {"members": ("Member1", "Member2", "Member3", "Member4")}
+
+if __name__ == "__main__":
+    app.run(debug=True)
