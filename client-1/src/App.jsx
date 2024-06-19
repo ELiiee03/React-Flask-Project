@@ -1,10 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import axios from 'axios'; //nag import dre og axios nga gi install para mo gana http clients
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [array, setArray] = useState([]);
+
+  const fetchAPI = async () => {
+    const response = await axios.get("http://127.0.0.1:8080/members")
+    // console.log(response.data.members);
+    setArray(response.data.members);
+  }
+
+  useEffect(() => {
+    fetchAPI();
+  }, []);
 
   return (
     <>
@@ -22,7 +34,14 @@ function App() {
           count is {count}
         </button>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          {
+            array.map((member, index) => (
+            <div key={index}>
+              <span>{member}</span>
+              <br></br>
+            </div>
+              ))
+          }
         </p>
       </div>
       <p className="read-the-docs">
